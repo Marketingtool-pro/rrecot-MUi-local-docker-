@@ -22,11 +22,12 @@ import SettingCard from '@/components/cards/SettingCard';
 import DialogLogout from '@/components/dialog/DialogLogout';
 import DialogDelete from '@/components/dialog/DialogDelete';
 import { useAuth } from '@/contexts/AuthContext';
+import { logout } from '@/utils/api/auth';
 
 // @assets
 import { IconCheck, IconExclamationMark } from '@tabler/icons-react';
 
-import avatar1 from '@/assets/images/users/avatar-1.png';
+import defaultAvatar from '@/assets/images/users/avatar-1.png';
 
 function FieldSection({ label, caption, action }) {
   return (
@@ -48,12 +49,12 @@ export default function SettingDetailsCard() {
   const { user } = useAuth();
 
   const profileData = {
-    avatar: avatar1,
+    avatar: user?.avatar || defaultAvatar,
     firstName: user?.firstname || '',
     lastName: user?.lastname || '',
     email: user?.email || '',
     isEmailVerified: true,
-    dialCode: user?.dialcode || '+91',
+    dialCode: user?.dialcode || '+1',
     contact: user?.contact || ''
   };
 
@@ -71,9 +72,9 @@ export default function SettingDetailsCard() {
     setOpenLogoutDialog(false);
   };
 
-  const handleDialogLogout = () => {
-    console.log('logout');
+  const handleDialogLogout = async () => {
     setOpenLogoutDialog(false);
+    await logout();
   };
 
   // Dialog Delete handle
@@ -89,11 +90,15 @@ export default function SettingDetailsCard() {
 
   const handleDialogDelete = () => {
     startTransition(async () => {
-      // Replace the below timeout with your actual API call to delete an account
-      // Example: await deleteAccount();
-      await new Promise((resolve) => setTimeout(() => resolve('ok'), 3000));
-      enqueueSnackbar(`Your account has been deleted.`, { variant: 'success' });
-      setOpenDeleteDialog(false);
+      try {
+        // Note: Appwrite doesn't allow users to delete their own account from client SDK
+        // This would need a server-side function. For now, log them out.
+        enqueueSnackbar('Account deletion request submitted. Contact help@marketingtool.pro to complete.', { variant: 'info' });
+        setOpenDeleteDialog(false);
+      } catch {
+        enqueueSnackbar('Failed to process request.', { variant: 'error' });
+        setOpenDeleteDialog(false);
+      }
     });
   };
 

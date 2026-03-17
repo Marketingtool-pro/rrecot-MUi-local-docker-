@@ -9,7 +9,7 @@ import Stack from '@mui/material/Stack';
 
 // @project
 import { SECTIONS, ToolCard, ChatHeroSection } from '../index';
-import { executeChat } from '@/utils/api/windmill';
+import ToolInlineForm from '../ToolInlineForm';
 import { useAuth } from '@/contexts/AuthContext';
 
 // @assets
@@ -21,6 +21,7 @@ export default function CreateEmail() {
   const inputRef = useRef(null);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [selectedTool, setSelectedTool] = useState(null);
 
   const section = SECTIONS.find((s) => s.id === 'email');
 
@@ -30,13 +31,19 @@ export default function CreateEmail() {
     navigate('/chat');
   };
 
+  if (selectedTool) {
+    return (
+      <Box sx={{ height: 'calc(100vh - 120px)', overflow: 'auto', px: { xs: 2, md: 3, lg: 4 }, py: 2 }}>
+        <ToolInlineForm toolSlug={selectedTool} onBack={() => setSelectedTool(null)} />
+      </Box>
+    );
+  }
+
   return (
     <Box sx={{ height: 'calc(100vh - 120px)', overflow: 'auto', px: { xs: 2, md: 3, lg: 4 }, pb: 6 }}>
       <Box sx={{ maxWidth: 1400, mx: 'auto' }}>
-        {/* Same Chat Hero Section */}
         <ChatHeroSection input={input} setInput={setInput} onSend={handleSend} loading={loading} inputRef={inputRef} navigate={navigate} />
 
-        {/* Section Title */}
         <Stack direction="row" alignItems="center" spacing={1.5} sx={{ mb: 3 }}>
           <Box sx={{ width: 36, height: 36, borderRadius: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'rgba(99,102,241,0.12)', color: '#6366f1' }}>
             <IconMail size={20} />
@@ -47,11 +54,10 @@ export default function CreateEmail() {
           </Box>
         </Stack>
 
-        {/* 12 Cards Grid */}
         <Grid container spacing={2.5}>
           {section.tools.map((tool) => (
             <Grid key={tool.slug} size={{ xs: 6, sm: 4, md: 3, lg: 3 }}>
-              <ToolCard tool={tool} onClick={() => navigate(`/tools/${tool.slug}`)} />
+              <ToolCard tool={tool} onClick={() => setSelectedTool(tool.slug)} />
             </Grid>
           ))}
         </Grid>

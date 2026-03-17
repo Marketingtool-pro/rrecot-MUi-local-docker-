@@ -10,6 +10,7 @@ import Backdrop from './Backdrop';
 import BarLabel from './BarLabel';
 import Breadcrumbs from './Breadcrumbs';
 import Button from './Button';
+import Card from './Card';
 import CardActions from './CardActions';
 import CardContent from './CardContent';
 import CardHeader from './CardHeader';
@@ -68,6 +69,7 @@ export default function ComponentsOverrides(theme) {
     BarLabel(theme),
     Breadcrumbs(theme),
     Button(theme),
+    Card(theme),
     CardActions(theme),
     CardContent(),
     CardHeader(theme),

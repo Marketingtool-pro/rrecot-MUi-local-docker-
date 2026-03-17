@@ -14,8 +14,12 @@ import { IconArrowNarrowRight, IconArrowUpRight } from '@tabler/icons-react';
 
 /***************************  PERFORMANCE - REDIAL CHART  ***************************/
 
-export default function AnalyticsPerformanceRedialChart() {
+export default function AnalyticsPerformanceRedialChart({ data }) {
   const theme = useTheme();
+
+  const gaugeValue = data?.percentage ?? 0;
+  const revenueAmount = data?.amount || '$0';
+  const changeLabel = data?.change || '0%';
 
   return (
     <MainCard sx={{ p: 0.75, pr: 3, pl: 2 }}>
@@ -23,7 +27,7 @@ export default function AnalyticsPerformanceRedialChart() {
         <Gauge
           width={100}
           height={100}
-          value={75}
+          value={gaugeValue}
           sx={{
             '& .MuiGauge-valueText': { '& text': { typography: 'caption1', fill: theme.vars.palette.primary.main } },
             '& .MuiGauge-referenceArc': { fill: theme.vars.palette.secondary.lighter }
@@ -39,8 +43,8 @@ export default function AnalyticsPerformanceRedialChart() {
               Total Revenue
             </Typography>
             <Stack direction="row" sx={{ gap: 0.5, alignItems: 'center' }}>
-              <Typography variant="h4">$4593.35</Typography>
-              <Chip label="24.5%" variant="text" size="small" avatar={<IconArrowUpRight />} color="success" />
+              <Typography variant="h4">{revenueAmount}</Typography>
+              <Chip label={changeLabel} variant="text" size="small" avatar={<IconArrowUpRight />} color="success" />
             </Stack>
           </Stack>
           <IconButton variant="outlined" color="secondary" size="small" aria-label="view more">

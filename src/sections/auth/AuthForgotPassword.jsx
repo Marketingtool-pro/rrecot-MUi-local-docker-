@@ -68,7 +68,7 @@ export default function AuthForgotPassword({ inputSx, redirectTo, doRedirect = f
       <InputLabel>Email</InputLabel>
       <OutlinedInput
         {...register('email', emailSchema)}
-        placeholder="example@saasable.io"
+        placeholder="you@example.com"
         fullWidth
         error={Boolean(errors.email)}
         sx={{ ...inputSx }}

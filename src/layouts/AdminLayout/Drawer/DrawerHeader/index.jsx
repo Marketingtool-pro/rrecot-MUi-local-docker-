@@ -22,17 +22,15 @@ export default function DrawerHeader({ open }) {
     <Box sx={{ width: 1, px: 2, py: { xs: 2, md: 2.5 } }}>
       <Stack direction="row" sx={{ alignItems: 'center', justifyContent: open ? 'space-between' : 'center', height: 36 }}>
         <Logo isIcon />
-        {open && (
-          <IconButton
-            aria-label="open drawer"
-            onClick={() => handlerDrawerOpen(!drawerOpen)}
-            size="small"
-            color="secondary"
-            variant="outlined"
-          >
-            {!drawerOpen ? <IconLayoutSidebarRightCollapse size={20} /> : <IconLayoutSidebarLeftCollapse size={20} />}
-          </IconButton>
-        )}
+        <IconButton
+          aria-label="open drawer"
+          onClick={() => handlerDrawerOpen(!drawerOpen)}
+          size="small"
+          color="secondary"
+          variant="outlined"
+        >
+          {!drawerOpen ? <IconLayoutSidebarRightCollapse size={20} /> : <IconLayoutSidebarLeftCollapse size={20} />}
+        </IconButton>
       </Stack>
     </Box>
   );

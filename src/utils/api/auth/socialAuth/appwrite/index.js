@@ -26,6 +26,16 @@ export async function getUser() {
   const user = await appwriteAccount.get();
   const jwtResponse = await appwriteAccount.createJWT();
 
+  // Update localStorage with fresh JWT
+  const stored = localStorage.getItem(AUTH_USER_KEY);
+  const existing = stored ? JSON.parse(stored) : {};
+  localStorage.setItem(AUTH_USER_KEY, JSON.stringify({
+    ...existing,
+    id: user.$id,
+    email: user.email,
+    access_token: jwtResponse.jwt
+  }));
+
   return {
     id: user.$id,
     email: user.email,

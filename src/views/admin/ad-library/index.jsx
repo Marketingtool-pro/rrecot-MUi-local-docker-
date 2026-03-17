@@ -680,6 +680,8 @@ export default function AdLibraryPage() {
             muted
             loop
             playsInline
+            preload="none"
+            poster="/images/ad-library/images/01b569fd1095ed0daf4f923864e685bc.png"
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           >
             <source src={HERO_VIDEO} type="video/mp4" />
@@ -724,7 +726,7 @@ export default function AdLibraryPage() {
       {/* ERROR STATES */}
       {error === 'api_not_configured' && (
         <Alert severity="info" sx={{ borderRadius: 2 }}>
-          Ad Library search API is not configured. Showing sample ads below. Configure on Windmill to enable live search.
+          Ad Library search is not configured yet. Showing sample ads below.
         </Alert>
       )}
       {error && error !== 'api_not_configured' && (

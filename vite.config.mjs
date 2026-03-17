@@ -10,9 +10,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     server: {
-      // this ensures that the browser opens upon server start
       open: true,
-      // this sets a default port to 3000
       port: PORT,
       host: true
     },
@@ -24,6 +22,12 @@ export default defineConfig(({ mode }) => {
       global: 'window'
     },
     base: APP_BASE_URL,
-    plugins: [tailwindcss(), react(), jsconfigPaths()]
+    plugins: [tailwindcss(), react(), jsconfigPaths()],
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      setupFiles: './src/setupTests.js',
+      css: true
+    }
   };
 });

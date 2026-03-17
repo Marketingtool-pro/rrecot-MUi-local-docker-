@@ -7295,9 +7295,7 @@
         "type": "select",
         "options": [
           "Feed Shopping Ads",
-          "Story Shopping Ads",
           "Explore Shopping Ads",
-          "Reels Shopping Ads",
           "All Formats"
         ]
       }
@@ -9327,9 +9325,6 @@
         "type": "select",
         "options": [
           "Single Image (Feed)",
-          "Video (Feed)",
-          "Stories",
-          "Reels",
           "Carousel",
           "Collection"
         ]
@@ -16697,10 +16692,7 @@
         "options": [
           "Single Image",
           "Carousel",
-          "Video",
-          "Collection",
-          "Stories",
-          "Reels"
+          "Collection"
         ]
       },
       {
@@ -16891,8 +16883,6 @@
         "type": "select",
         "options": [
           "Feed Ad",
-          "Stories",
-          "Reels",
           "Carousel",
           "Collection"
         ]
@@ -18059,9 +18049,6 @@
         "type": "select",
         "options": [
           "Feed Image Ad",
-          "Feed Video Ad",
-          "Story Ad",
-          "Reel Ad",
           "Carousel Ad",
           "Collection Ad"
         ]

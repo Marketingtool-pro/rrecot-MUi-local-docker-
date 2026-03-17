@@ -111,14 +111,13 @@ export default function DashboardPage() {
   const [tab, setTab] = useState(0);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const loadData = async () => {
       try {
         const summary = await fetchDashboardSummary();
         setData(summary);
       } catch {
-        // Windmill not connected yet — show default state
+        // API not connected yet — show default state
         setData(null);
       } finally {
         setLoading(false);
@@ -180,7 +179,7 @@ export default function DashboardPage() {
           {loading ? (
             <Skeleton variant="rounded" height={130} />
           ) : (
-            <KpiCard title="ROAS" value={kpis.roas} change="+5.1%" changeType="up" icon={IconTargetArrow} color="#1BA2DB" />
+            <KpiCard title="ROAS" value={kpis.roas} icon={IconTargetArrow} color="#1BA2DB" />
           )}
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>

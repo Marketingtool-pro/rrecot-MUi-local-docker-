@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 // @project
-import LogoMain from '@/components/logo/LogoMain';
 import GetImagePath from '@/utils/GetImagePath';
 
 // @assets
@@ -27,8 +26,7 @@ export default function AuthLayout() {
       </Grid>
       <Grid size={{ xs: 12, md: 6, lg: 5 }} sx={{ bgcolor: 'grey.100', pt: 7, display: { xs: 'none', md: 'block' } }}>
         <Stack sx={{ height: 1, justifyContent: 'space-between' }}>
-          <Stack sx={{ alignItems: 'center', gap: 2 }}>
-            <LogoMain />
+          <Stack sx={{ alignItems: 'center', gap: 2, px: 3 }}>
             <Typography variant="body2" color="grey.700" align="center" sx={{ maxWidth: 400 }}>
               AI-powered ad management platform. Create campaigns, optimize performance, and scale your marketing with intelligent automation.
             </Typography>

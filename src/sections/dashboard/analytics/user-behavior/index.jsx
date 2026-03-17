@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 // @mui
 import Grid from '@mui/material/Grid';
 
@@ -11,23 +13,25 @@ import PageAnimateWrapper from '@/components/PageAnimateWrapper';
 
 /***************************  ANALYTICS - USER BEHAVIOR  ***************************/
 
-export default function AnalyticsUserBehavior() {
+export default function AnalyticsUserBehavior({ data, loading, hasData }) {
   return (
     <PageAnimateWrapper>
       <Grid container spacing={{ xs: 2, md: 3 }}>
         <Grid size={12}>
-          <AnalyticsBehaviorCard />
+          <AnalyticsBehaviorCard data={data?.kpis} />
         </Grid>
         <Grid size={12}>
-          <AnalyticsBehaviorChart />
+          <AnalyticsBehaviorChart data={data?.chart} />
         </Grid>
         <Grid size={{ xs: 12, md: 8 }}>
-          <AnalyticsBehaviorTable />
+          <AnalyticsBehaviorTable data={data?.table} />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-          <AnalyticsBehaviorTrafficDevice />
+          <AnalyticsBehaviorTrafficDevice data={data?.deviceTraffic} />
         </Grid>
       </Grid>
     </PageAnimateWrapper>
   );
 }
+
+AnalyticsUserBehavior.propTypes = { data: PropTypes.object, loading: PropTypes.bool, hasData: PropTypes.bool };

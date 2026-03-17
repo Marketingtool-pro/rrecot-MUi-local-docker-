@@ -62,14 +62,15 @@ const performanceAnalytics = [
 
 /***************************   PERFORMANCE - CARDS  ***************************/
 
-export default function AnalyticsPerformanceCard() {
+export default function AnalyticsPerformanceCard({ data }) {
   const theme = useTheme();
   const cardCommonProps = { border: 'none', borderRadius: 0, boxShadow: 'none' };
+  const items = data || performanceAnalytics;
 
   return (
     <Grid container sx={{ borderRadius: 4, boxShadow: theme.vars.customShadows.section, ...applyBorderWithRadius(16, theme) }}>
-      {performanceAnalytics.map((item, index) => (
-        <Grid key={index} size={{ xs: 12, sm: index === performanceAnalytics.length - 1 ? 12 : 6, md: 4 }}>
+      {items.map((item, index) => (
+        <Grid key={index} size={{ xs: 12, sm: index === items.length - 1 ? 12 : 6, md: 4 }}>
           <PerformanceCard {...{ ...item, cardProps: { sx: cardCommonProps } }} />
         </Grid>
       ))}

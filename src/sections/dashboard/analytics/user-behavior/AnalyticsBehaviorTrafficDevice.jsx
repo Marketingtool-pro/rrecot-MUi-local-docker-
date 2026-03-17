@@ -9,7 +9,7 @@ import MainCard from '@/components/MainCard';
 
 /***************************  CHART - TRAFFIC DEVICE  ***************************/
 
-export default function AnalyticsBehaviorTrafficDevice() {
+export default function AnalyticsBehaviorTrafficDevice({ data }) {
   const theme = useTheme();
 
   return (
@@ -21,7 +21,7 @@ export default function AnalyticsBehaviorTrafficDevice() {
             { scaleType: 'band', data: ['Computer', 'Tablet', 'Mobile'], categoryGapRatio: 0, disableLine: true, disableTicks: true }
           ]}
           yAxis={[{ disableLine: true, disableTicks: true, tickLabelStyle: { width: 0, display: 'none' } }]}
-          series={[{ id: 'TrafficInDevice', data: [86.5, 42.5, 64.2] }]}
+          series={[{ id: 'TrafficInDevice', data: data ? [data.computer, data.tablet, data.mobile] : [0, 0, 0] }]}
           height={284}
           axisHighlight={{ x: 'none' }}
           margin={{ top: 0, right: 0, bottom: 0, left: -50 }}

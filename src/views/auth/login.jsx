@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 
 // @project
 import RouterLink from '@/components/Link';
+import Logo from '@/components/logo';
 import AuthLogin from '@/sections/auth/AuthLogin';
 import AuthSocial from '@/sections/auth/AuthSocial';
 import Copyright from '@/sections/auth/Copyright';
@@ -37,7 +38,7 @@ export default function Login() {
         <AuthLogin />
 
         <Typography variant="body2" color="text.secondary" sx={{ mt: { xs: 2, sm: 3 } }}>
-          Don’t have an account?{' '}
+          Don't have an account?{' '}
           <Link component={RouterLink} underline="hover" variant="subtitle2" to="/register" sx={{ '&:hover': { color: 'primary.dark' } }}>
             Sign Up
           </Link>

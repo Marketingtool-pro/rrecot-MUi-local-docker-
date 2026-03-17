@@ -15,6 +15,7 @@ import { useForm } from 'react-hook-form';
 import Contact from '@/components/Contact';
 import Modal from '@/components/Modal';
 import { ModalSize } from '@/enum';
+import { useAuth } from '@/contexts/AuthContext';
 
 const initialData = {
   dialCode: '+1',
@@ -24,6 +25,7 @@ const initialData = {
 /***************************   MODAL - PHONE NUMBER  ***************************/
 
 export default function ModalPhoneNumber({ phoneData }) {
+  const { refreshUser } = useAuth();
   const [open, setOpen] = useState(false);
   const [isProcessing, startTransition] = useTransition();
 
@@ -39,14 +41,20 @@ export default function ModalPhoneNumber({ phoneData }) {
 
   const onSubmit = (data) => {
     if (!isDirty) return;
-    console.log(data);
 
     startTransition(async () => {
-      // Replace the below timeout with your actual API call to update phone number
-      // Example: await updatePhone(data);
-      await new Promise((resolve) => setTimeout(() => resolve('ok'), 3000));
-      enqueueSnackbar(`Phone number has been ${phoneData?.contact ? 'updated' : 'added'}.`, { variant: 'success' });
-      setOpen(false);
+      try {
+        const { appwriteAccount } = await import('@/utils/auth-client/appwrite');
+        const phone = `${data.dialCode}${data.contact}`;
+        // Save phone to Appwrite user prefs (updatePhone requires password + E.164)
+        const prefs = await appwriteAccount.getPrefs();
+        await appwriteAccount.updatePrefs({ ...prefs, dialCode: data.dialCode, contact: data.contact });
+        await refreshUser();
+        enqueueSnackbar(`Phone number has been ${phoneData?.contact ? 'updated' : 'added'}.`, { variant: 'success' });
+        setOpen(false);
+      } catch (err) {
+        enqueueSnackbar(err?.message || 'Failed to update phone number.', { variant: 'error' });
+      }
     });
   };
 

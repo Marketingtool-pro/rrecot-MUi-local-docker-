@@ -20,30 +20,30 @@ import { TabsType } from '@/enum';
 /***************************  TABS - DATA  ***************************/
 
 const sevenDaysData = [
-  { title: 'Direct', value: '16,890', progress: { value: 80 } },
-  { title: 'Search', value: '4,909', progress: { value: 70 } },
-  { title: 'Social', value: '550', progress: { value: 50 } },
-  { title: 'Ads', value: '140', progress: { value: 30 } },
-  { title: 'Mail', value: '8,675', progress: { value: 60 } },
-  { title: 'Links', value: '4,900', progress: { value: 40 } }
+  { title: 'Direct', value: '0', progress: { value: 0 } },
+  { title: 'Search', value: '0', progress: { value: 0 } },
+  { title: 'Social', value: '0', progress: { value: 0 } },
+  { title: 'Ads', value: '0', progress: { value: 0 } },
+  { title: 'Mail', value: '0', progress: { value: 0 } },
+  { title: 'Links', value: '0', progress: { value: 0 } }
 ];
 
 const monthData = [
-  { title: 'Direct', value: '67,560', progress: { value: 80 } },
-  { title: 'Search', value: '19,636', progress: { value: 70 } },
-  { title: 'Social', value: '2,220', progress: { value: 50 } },
-  { title: 'Ads', value: '560', progress: { value: 30 } },
-  { title: 'Mail', value: '34,700', progress: { value: 60 } },
-  { title: 'Links', value: '19,600', progress: { value: 40 } }
+  { title: 'Direct', value: '0', progress: { value: 0 } },
+  { title: 'Search', value: '0', progress: { value: 0 } },
+  { title: 'Social', value: '0', progress: { value: 0 } },
+  { title: 'Ads', value: '0', progress: { value: 0 } },
+  { title: 'Mail', value: '0', progress: { value: 0 } },
+  { title: 'Links', value: '0', progress: { value: 0 } }
 ];
 
 const yearData = [
-  { title: 'Direct', value: '8,10,720', progress: { value: 80 } },
-  { title: 'Search', value: '2,35,632', progress: { value: 70 } },
-  { title: 'Social', value: '26,640', progress: { value: 40 } },
-  { title: 'Ads', value: '6,720', progress: { value: 10 } },
-  { title: 'Mail', value: '4,16,400', progress: { value: 60 } },
-  { title: 'Links', value: '2,35,200', progress: { value: 65 } }
+  { title: 'Direct', value: '0', progress: { value: 0 } },
+  { title: 'Search', value: '0', progress: { value: 0 } },
+  { title: 'Social', value: '0', progress: { value: 0 } },
+  { title: 'Ads', value: '0', progress: { value: 0 } },
+  { title: 'Mail', value: '0', progress: { value: 0 } },
+  { title: 'Links', value: '0', progress: { value: 0 } }
 ];
 
 /***************************  TABS - A11Y  ***************************/
@@ -78,12 +78,17 @@ function TabContent({ data }) {
 
 /***************************  PERFORMANCE - BOUNCE RATE  ***************************/
 
-export default function AnalyticsPerformanceBounceRate() {
+export default function AnalyticsPerformanceBounceRate({ data }) {
   const [bounce, setBounce] = useState('days');
 
   const handleChange = (_event, newBounce) => {
     setBounce(newBounce);
   };
+
+  // Use real data from API if available, otherwise use defaults (zeros)
+  const d7 = data?.sevenDays || sevenDaysData;
+  const dMonth = data?.month || monthData;
+  const dYear = data?.year || yearData;
 
   return (
     <MainCard>
@@ -96,13 +101,13 @@ export default function AnalyticsPerformanceBounceRate() {
             <Tab label="Last Year" {...a11yProps('year')} />
           </Tabs>
           <TabPanel value={bounce} index="days">
-            <TabContent data={sevenDaysData} />
+            <TabContent data={d7} />
           </TabPanel>
           <TabPanel value={bounce} index="month">
-            <TabContent data={monthData} />
+            <TabContent data={dMonth} />
           </TabPanel>
           <TabPanel value={bounce} index="year">
-            <TabContent data={yearData} />
+            <TabContent data={dYear} />
           </TabPanel>
         </Box>
       </Stack>

@@ -15,6 +15,7 @@ import Fade from '@mui/material/Fade';
 // @project
 import { executeChat } from '@/utils/api/windmill';
 import { useAuth } from '@/contexts/AuthContext';
+import ToolInlineForm from './ToolInlineForm';
 
 // @assets
 import { IconSend, IconSettings2, IconArrowRight, IconSparkles, IconMail, IconRobot, IconChartBar, IconArrowLeft } from '@tabler/icons-react';
@@ -29,18 +30,18 @@ export const SECTIONS = [
     icon: <IconMail size={18} />,
     color: '#6366f1',
     tools: [
-      { name: 'Cold Outreach Email', slug: 'ad-copy-generator', image: '/images/chat/bew-email-robots.jpg', desc: 'AI-powered cold email sequences' },
-      { name: 'Product Launch Email', slug: 'email-writer', image: '/images/chat/bew-outreach.jpg', desc: 'Launch announcements that convert' },
-      { name: 'Email Writer', slug: 'headline-generator', image: '/images/chat/bew-email-ai.jpg', desc: 'Professional emails in seconds' },
-      { name: 'Facebook Ad Copy', slug: 'facebook-ad-copy', image: '/images/chat/bew-facebook.jpg', desc: 'High-converting ad copy' },
-      { name: 'Instagram Caption', slug: 'instagram-caption', image: '/images/chat/bew-social-guide.jpg', desc: 'Engaging captions that drive action' },
+      { name: 'Cold Outreach Email', slug: 'cold-outreach-email', image: '/images/chat/bew-email-robots.jpg', desc: 'AI-powered cold email sequences' },
+      { name: 'Product Launch Email', slug: 'product-launch-email-sequence', image: '/images/chat/bew-outreach.jpg', desc: 'Launch announcements that convert' },
+      { name: 'Email Writer', slug: 'email-writer', image: '/images/chat/bew-email-ai.jpg', desc: 'Professional emails in seconds' },
+      { name: 'Facebook Ad Copy', slug: 'meta-ai-copywriter', image: '/images/chat/bew-facebook.jpg', desc: 'High-converting ad copy' },
+      { name: 'Instagram Caption', slug: 'instagram-caption-generator', image: '/images/chat/bew-social-guide.jpg', desc: 'Engaging captions that drive action' },
       { name: 'Blog Writer', slug: 'blog-writer', image: '/images/chat/bew-web-design.jpg', desc: 'SEO-optimized blog content' },
-      { name: 'Sales Page Copy', slug: 'sales-page-copy', image: '/images/chat/bew-social-growth.jpg', desc: 'Persuasive sales copy' },
+      { name: 'Sales Page Copy', slug: 'sales-page-copy-writer', image: '/images/chat/bew-social-growth.jpg', desc: 'Persuasive sales copy' },
       { name: 'CTA Writer', slug: 'cta-writer', image: '/images/chat/bew-fb-manager.jpg', desc: 'Click-worthy call-to-actions' },
-      { name: 'Headline Generator', slug: 'headline-gen', image: '/images/chat/bew-google-tips.jpg', desc: 'Headlines that grab attention' },
-      { name: 'LinkedIn Post', slug: 'linkedin-post', image: '/images/chat/bew-automation.jpg', desc: 'Professional LinkedIn content' },
-      { name: 'SEO Content Writer', slug: 'seo-content', image: '/images/chat/bew-seo.jpg', desc: 'Rank higher with AI content' },
-      { name: 'Product Description', slug: 'product-desc', image: '/images/chat/bew-app-store.jpg', desc: 'Compelling product copy' }
+      { name: 'SEO Title Generator', slug: 'seo-title-generator', image: '/images/chat/bew-google-tips.jpg', desc: 'Headlines that grab attention' },
+      { name: 'LinkedIn Ad Copy', slug: 'linkedin-ad-copy-generator', image: '/images/chat/bew-automation.jpg', desc: 'Professional LinkedIn content' },
+      { name: 'Article Generator', slug: 'article-generator', image: '/images/chat/bew-seo.jpg', desc: 'Rank higher with AI content' },
+      { name: 'Product Description', slug: 'product-description-writer', image: '/images/chat/bew-app-store.jpg', desc: 'Compelling product copy' }
     ]
   },
   {
@@ -50,18 +51,18 @@ export const SECTIONS = [
     icon: <IconRobot size={18} />,
     color: '#8b5cf6',
     tools: [
-      { name: 'Campaign Optimizer', slug: 'campaign-optimizer', image: '/images/chat/bew-digital-robot.jpg', desc: 'Optimize campaigns with AI' },
-      { name: 'Workflow Builder', slug: 'workflow-builder', image: '/images/chat/bew-ai-hand.jpg', desc: 'Build automated workflows' },
-      { name: 'Smart Scheduling', slug: 'smart-scheduling', image: '/images/chat/bew-ai-robot.jpg', desc: 'AI-scheduled posting times' },
-      { name: 'Bid Management AI', slug: 'bid-management', image: '/images/chat/bew-google-ads.jpg', desc: 'Automated bid strategies' },
-      { name: 'Budget Optimizer', slug: 'budget-optimizer', image: '/images/chat/bew-store-dash.jpg', desc: 'Maximize ROI on spend' },
-      { name: 'Automated Rules', slug: 'automated-rules', image: '/images/chat/bew-atlas-ai.jpg', desc: 'Set it and forget it rules' },
+      { name: 'Campaign Optimizer', slug: 'campaign-optimization-engine', image: '/images/chat/bew-digital-robot.jpg', desc: 'Optimize campaigns with AI' },
+      { name: 'Workflow Builder', slug: 'workflow-automation-builder', image: '/images/chat/bew-ai-hand.jpg', desc: 'Build automated workflows' },
+      { name: 'Smart Scheduling', slug: 'smart-scheduling-engine', image: '/images/chat/bew-ai-robot.jpg', desc: 'AI-scheduled posting times' },
+      { name: 'Bid Management AI', slug: 'bid-optimization-engine', image: '/images/chat/bew-google-ads.jpg', desc: 'Automated bid strategies' },
+      { name: 'Budget Manager', slug: 'budget-manager', image: '/images/chat/bew-store-dash.jpg', desc: 'Maximize ROI on spend' },
+      { name: 'Rule-Based Campaign', slug: 'rule-based-campaign-manager', image: '/images/chat/bew-atlas-ai.jpg', desc: 'Set it and forget it rules' },
       { name: 'Post Scheduler', slug: 'post-scheduler', image: '/images/chat/bew-webhooks.jpg', desc: 'Schedule across platforms' },
-      { name: 'Retargeting Engine', slug: 'retargeting-engine', image: '/images/chat/bew-tracking.jpg', desc: 'Smart audience retargeting' },
-      { name: 'Lead Scoring AI', slug: 'lead-scoring', image: '/images/chat/bew-ml-predict.jpg', desc: 'Score and prioritize leads' },
-      { name: 'Email Sequencer', slug: 'email-sequencer', image: '/images/chat/bew-prompt-eng.jpg', desc: 'Automated drip campaigns' },
-      { name: 'A/B Test Runner', slug: 'ab-test-runner', image: '/images/chat/bew-google-tips2.jpg', desc: 'Automate split testing' },
-      { name: 'Social Autopilot', slug: 'social-autopilot', image: '/images/chat/bew-ai-research.jpg', desc: 'Hands-free social management' }
+      { name: 'Retargeting Funnel', slug: 'retargeting-funnel-builder', image: '/images/chat/bew-tracking.jpg', desc: 'Smart audience retargeting' },
+      { name: 'Lead Magnet Creator', slug: 'lead-magnet-creator', image: '/images/chat/bew-ml-predict.jpg', desc: 'Create lead magnets with AI' },
+      { name: 'Email Automator', slug: 'milestone-email-automator', image: '/images/chat/bew-prompt-eng.jpg', desc: 'Automated drip campaigns' },
+      { name: 'A/B Test Manager', slug: 'campaign-ab-test-manager', image: '/images/chat/bew-google-tips2.jpg', desc: 'Automate split testing' },
+      { name: 'Social Autopilot', slug: 'ai-paid-social-manager', image: '/images/chat/bew-ai-research.jpg', desc: 'Hands-free social management' }
     ]
   },
   {
@@ -71,18 +72,18 @@ export const SECTIONS = [
     icon: <IconChartBar size={18} />,
     color: '#06b6d4',
     tools: [
-      { name: 'Analytics Dashboard', slug: 'analytics-dashboard', image: '/images/chat/bew-holographic.jpg', desc: 'Real-time marketing analytics' },
-      { name: 'Competitor Analysis', slug: 'competitor-analysis', image: '/images/chat/bew-audience.jpg', desc: 'Spy on competitor strategies' },
-      { name: 'Keyword Research', slug: 'keyword-research', image: '/images/chat/bew-analytics-float.jpg', desc: 'Find winning keywords' },
-      { name: 'Quality Score Booster', slug: 'quality-score', image: '/images/chat/bew-audit.jpg', desc: 'Improve ad quality scores' },
-      { name: 'Performance Monitor', slug: 'performance-monitor', image: '/images/chat/bew-google-dash.jpg', desc: 'Track KPIs in real-time' },
+      { name: 'Marketing KPI Dashboard', slug: 'marketing-kpi-dashboard', image: '/images/chat/bew-holographic.jpg', desc: 'Real-time marketing analytics' },
+      { name: 'Competitor Analysis', slug: 'competitor-analysis-tool', image: '/images/chat/bew-audience.jpg', desc: 'Spy on competitor strategies' },
+      { name: 'Keyword Research', slug: 'keyword-research-tool', image: '/images/chat/bew-analytics-float.jpg', desc: 'Find winning keywords' },
+      { name: 'Quality Score Checker', slug: 'quality-score-checker', image: '/images/chat/bew-audit.jpg', desc: 'Improve ad quality scores' },
+      { name: 'Performance Alerts', slug: 'performance-auto-alerts', image: '/images/chat/bew-google-dash.jpg', desc: 'Track KPIs in real-time' },
       { name: 'ROI Calculator', slug: 'roi-calculator', image: '/images/chat/bew-saas-ui.jpg', desc: 'Calculate marketing ROI' },
-      { name: 'Ad Spy Tool', slug: 'ad-spy', image: '/images/chat/bew-saas-library.jpg', desc: 'Research competitor ads' },
-      { name: 'Attribution Modeler', slug: 'attribution-modeler', image: '/images/chat/bew-nft-dash.jpg', desc: 'Multi-touch attribution' },
-      { name: 'Funnel Analyzer', slug: 'funnel-analyzer', image: '/images/chat/bew-ai-tools.jpg', desc: 'Optimize conversion funnels' },
-      { name: 'Budget Planner', slug: 'budget-planner', image: '/images/chat/bew-ai-money.jpg', desc: 'Plan ad spend intelligently' },
-      { name: 'Trend Detector', slug: 'trend-detector', image: '/images/chat/bew-openai.jpg', desc: 'Catch trends before they peak' },
-      { name: 'Campaign Reporter', slug: 'campaign-reporter', image: '/images/chat/bew-ai-courses.jpg', desc: 'Auto-generated campaign reports' }
+      { name: 'Ad Intelligence', slug: 'ad-intelligence-software', image: '/images/chat/bew-saas-library.jpg', desc: 'Research competitor ads' },
+      { name: 'Multi-Channel Attribution', slug: 'multi-channel-attribution', image: '/images/chat/bew-nft-dash.jpg', desc: 'Multi-touch attribution' },
+      { name: 'Conversion Path Analyzer', slug: 'conversion-path-analyzer', image: '/images/chat/bew-ai-tools.jpg', desc: 'Optimize conversion funnels' },
+      { name: 'Budget Planner', slug: 'marketing-budget-planner', image: '/images/chat/bew-ai-money.jpg', desc: 'Plan ad spend intelligently' },
+      { name: 'Google Trends Tool', slug: 'google-trends-tool', image: '/images/chat/bew-openai.jpg', desc: 'Catch trends before they peak' },
+      { name: 'Reporting Tools', slug: 'reporting-tools', image: '/images/chat/bew-ai-courses.jpg', desc: 'Auto-generated campaign reports' }
     ]
   }
 ];
@@ -130,13 +131,6 @@ export function ChatHeroSection({ input, setInput, onSend, loading, inputRef, na
 
       {/* Hero */}
       <Box sx={{ textAlign: 'center', mb: 4, mt: { xs: 1, md: 2 } }}>
-        <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 1, px: 2.5, py: 0.8, borderRadius: 6,
-          bgcolor: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.15)', mb: 2.5 }}>
-          <IconSparkles size={14} style={{ color: '#6366f1' }} />
-          <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: '#a5b4fc', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-            Powered by Claude AI
-          </Typography>
-        </Box>
         <Typography sx={{ fontWeight: 800, fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.6rem' }, letterSpacing: '-0.03em', lineHeight: 1.15,
           background: 'linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', mb: 1.5 }}>
           What can I help you build today?
@@ -193,7 +187,7 @@ export function ChatHeroSection({ input, setInput, onSend, loading, inputRef, na
 
 // ── SECTION ROW ──
 
-function ToolSection({ section, navigate }) {
+function ToolSection({ section, navigate, onToolClick }) {
   return (
     <Box sx={{ width: '100%', mb: 1 }}>
       <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-between', mb: 2, py: 1, '&:hover .section-arrow': { transform: 'translateX(4px)' } }}>
@@ -214,7 +208,7 @@ function ToolSection({ section, navigate }) {
         '&::-webkit-scrollbar-thumb': { bgcolor: 'rgba(255,255,255,0.1)', borderRadius: 4 } }}>
         {section.tools.map((tool) => (
           <Box key={tool.slug} sx={{ minWidth: 240, maxWidth: 260, flex: '0 0 auto', scrollSnapAlign: 'start' }}>
-            <ToolCard tool={tool} onClick={() => navigate(`/tools/${tool.slug}`)} />
+            <ToolCard tool={tool} onClick={() => onToolClick(tool.slug)} />
           </Box>
         ))}
       </Box>
@@ -234,6 +228,7 @@ export default function ChatPage() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [chatStarted, setChatStarted] = useState(false);
+  const [selectedTool, setSelectedTool] = useState(null);
 
   useEffect(() => { messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages]);
 
@@ -246,7 +241,7 @@ export default function ChatPage() {
     setLoading(true);
     try {
       const response = await executeChat({ message: msg, sessionId: 'default', userId: user?.id || 'anonymous' });
-      const aiContent = typeof response === 'string' ? response : response?.result || response?.message || JSON.stringify(response);
+      const aiContent = typeof response === 'string' ? response : response?.response || response?.result || response?.message || JSON.stringify(response);
       setMessages((prev) => [...prev, { role: 'assistant', content: aiContent, ts: Date.now() }]);
     } catch (err) {
       setMessages((prev) => [...prev, { role: 'assistant', content: `Error: ${err.message}`, ts: Date.now() }]);
@@ -255,17 +250,23 @@ export default function ChatPage() {
 
   const handleKeyDown = (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); } };
 
+  // Tool clicked — show inline form
+  const handleToolClick = (slug) => { setSelectedTool(slug); };
+
   return (
     <Box sx={{ height: 'calc(100vh - 120px)', display: 'flex', flexDirection: 'column' }}>
-      {!chatStarted ? (
+      {/* ═══ TOOL FORM VIEW ═══ */}
+      {selectedTool ? (
+        <Box sx={{ flex: 1, overflow: 'auto', px: { xs: 2, md: 3, lg: 4 }, py: 2 }}>
+          <ToolInlineForm toolSlug={selectedTool} onBack={() => setSelectedTool(null)} />
+        </Box>
+      ) : !chatStarted ? (
+        /* ═══ HOME VIEW ═══ */
         <Box sx={{ flex: 1, overflow: 'auto', px: { xs: 2, md: 3, lg: 4 }, pb: 6 }}>
           <Box sx={{ maxWidth: 1400, mx: 'auto' }}>
-            {/* Chat Hero */}
             <ChatHeroSection input={input} setInput={setInput} onSend={handleSend} loading={loading} inputRef={inputRef} navigate={navigate} />
-
-            {/* 3 TOOL SECTIONS */}
             {SECTIONS.map((section) => (
-              <ToolSection key={section.id} section={section} navigate={navigate} />
+              <ToolSection key={section.id} section={section} navigate={navigate} onToolClick={handleToolClick} />
             ))}
           </Box>
         </Box>
@@ -307,20 +308,6 @@ export default function ChatPage() {
                   </Box>
                 </Fade>
               ))}
-              {loading && (
-                <Fade in>
-                  <Box sx={{ display: 'flex', gap: 1.5 }}>
-                    <Box sx={{ width: 32, height: 32, borderRadius: 2, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'rgba(99,102,241,0.12)', color: '#6366f1' }}><IconSparkles size={16} /></Box>
-                    <Box sx={{ px: 3, py: 2, borderRadius: '20px 20px 20px 6px', bgcolor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <Box sx={{ display: 'flex', gap: 0.5 }}>
-                        {[0, 1, 2].map((d) => (<Box key={d} sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: '#6366f1', animation: 'pulse 1.4s ease-in-out infinite', animationDelay: `${d * 0.2}s`,
-                          '@keyframes pulse': { '0%, 80%, 100%': { opacity: 0.3, transform: 'scale(0.8)' }, '40%': { opacity: 1, transform: 'scale(1)' } } }} />))}
-                      </Box>
-                      <Typography sx={{ fontSize: '0.8rem', color: 'text.secondary', ml: 0.5 }}>Thinking...</Typography>
-                    </Box>
-                  </Box>
-                </Fade>
-              )}
               <div ref={messagesEndRef} />
             </Stack>
           </Box>

@@ -20,25 +20,16 @@ const height = 138;
 
 const geoUrl = 'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json';
 
-// Mock data for orders by state (this can be replaced with actual data)
-const ordersData = {
-  '01': { name: 'Alabama', orders: 1200 },
-  '02': { name: 'Alaska', orders: 800 },
-  '04': { name: 'Arizona', orders: 432 },
-  '05': { name: 'Arkansas', orders: 1087 },
-  '06': { name: 'California', orders: 600 },
-  '08': { name: 'Colorado', orders: 852 },
-  '09': { name: 'Connecticut', orders: 455 },
-  17: { name: 'Illinois', orders: 5000 }
-};
+const defaultOrdersData = {};
 
 /***************************  PERFORMANCE - MAP CHART  ***************************/
 
-export default function AnalyricsPerformanceMapChart() {
+export default function AnalyricsPerformanceMapChart({ data }) {
   const theme = useTheme();
 
   const svgRef = useRef(null);
   const [geoData, setGeoData] = useState(null);
+  const geoOrders = data || defaultOrdersData;
 
   const mapColors = {
     veryHigh: theme.vars.palette.secondary.light,
@@ -82,7 +73,7 @@ export default function AnalyricsPerformanceMapChart() {
       .attr('d', (d) => pathGenerator(d))
       .attr('fill', (d) => {
         const fips = d.id;
-        const stateData = ordersData[fips];
+        const stateData = geoOrders[fips];
         const orders = stateData?.orders || 0;
         return getColorByOrders(orders);
       })

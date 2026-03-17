@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  return <AuthContext value={{ user, isProcessing }}>{children}</AuthContext>;
+  return <AuthContext value={{ user, isProcessing, refreshUser: fetchUser }}>{children}</AuthContext>;
 };
 
 export const useAuth = () => {
