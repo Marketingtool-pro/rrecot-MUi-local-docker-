@@ -11,3 +11,6 @@ dist-ssr
 .vinxi
 __unconfig*
 todos.json
+public/videos/social-hero.mov
+public/videos/google-hero.mp4
+public/videos/seo-hero.mp4
