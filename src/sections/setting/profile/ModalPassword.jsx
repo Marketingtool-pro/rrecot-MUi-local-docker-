@@ -57,14 +57,17 @@ export default function ModalPassword({ inputSx }) {
 
   const onSubmit = (data) => {
     if (!isDirty) return;
-    console.log(data);
 
     startTransition(async () => {
-      // Replace the below timeout with your actual API call to change password
-      // Example: await changePassword(data);
-      await new Promise((resolve) => setTimeout(() => resolve('ok'), 3000));
-      enqueueSnackbar(`Your password has been updated successfully.`, { variant: 'success' });
-      closeModal();
+      try {
+        const { appwriteAccount } = await import('@/utils/auth-client/appwrite');
+        await appwriteAccount.updatePassword(data.password, data.oldPassword);
+        enqueueSnackbar('Your password has been updated successfully.', { variant: 'success' });
+        closeModal();
+      } catch (err) {
+        const msg = err?.message || 'Failed to update password.';
+        enqueueSnackbar(msg.includes('password') ? 'Current password is incorrect.' : msg, { variant: 'error' });
+      }
     });
   };
 

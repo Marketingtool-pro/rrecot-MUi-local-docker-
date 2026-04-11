@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 // @mui
 import { useTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
@@ -80,12 +82,13 @@ const overviewAnalytics = [
 
 /***************************   OVERVIEW - CARDS  ***************************/
 
-export default function AnalyticsOverviewCard() {
+export default function AnalyticsOverviewCard({ data }) {
   const theme = useTheme();
+  const items = data || overviewAnalytics;
 
   return (
     <Grid container sx={{ borderRadius: 4, boxShadow: theme.vars.customShadows.section, ...applyBorderWithRadius(16, theme) }}>
-      {overviewAnalytics.map((item, index) => (
+      {items.map((item, index) => (
         <Grid key={index} size={{ xs: 6, sm: 6, md: 3 }}>
           <OverviewCard {...{ ...item, cardProps: { sx: { border: 'none', borderRadius: 0, boxShadow: 'none' } } }} />
         </Grid>
@@ -93,3 +96,5 @@ export default function AnalyticsOverviewCard() {
     </Grid>
   );
 }
+
+AnalyticsOverviewCard.propTypes = { data: PropTypes.array };

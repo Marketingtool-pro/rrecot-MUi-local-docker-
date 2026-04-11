@@ -40,10 +40,10 @@ const PAGE_VIDEOS = [
 ];
 
 const glass = {
-  bg: 'rgba(248,248,248,0.04)',
-  border: '1px solid rgba(255,255,255,0.06)',
-  blur: 'blur(50px)',
-  shadow: '0px 24px 32px -12px rgba(18,18,18,0.1), 2px 4px 16px 0px rgba(248,248,248,0.06) inset',
+  bg: 'rgba(10, 10, 14, 0.80)',
+  border: '1px solid rgba(255,255,255,0.03)',
+  blur: 'blur(40px)',
+  shadow: 'inset 2px 4px 16px 0px rgba(0,0,0,0.25)',
   radius: '24px'
 };
 

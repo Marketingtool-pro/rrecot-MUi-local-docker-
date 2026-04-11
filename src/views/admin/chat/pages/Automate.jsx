@@ -9,7 +9,7 @@ import Stack from '@mui/material/Stack';
 
 // @project
 import { SECTIONS, ToolCard, ChatHeroSection } from '../index';
-import { executeChat } from '@/utils/api/windmill';
+import ToolInlineForm from '../ToolInlineForm';
 import { useAuth } from '@/contexts/AuthContext';
 
 // @assets
@@ -21,6 +21,7 @@ export default function Automate() {
   const inputRef = useRef(null);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [selectedTool, setSelectedTool] = useState(null);
 
   const section = SECTIONS.find((s) => s.id === 'automate');
 
@@ -29,6 +30,14 @@ export default function Automate() {
     if (!msg || loading) return;
     navigate('/chat');
   };
+
+  if (selectedTool) {
+    return (
+      <Box sx={{ height: 'calc(100vh - 120px)', overflow: 'auto', px: { xs: 2, md: 3, lg: 4 }, py: 2 }}>
+        <ToolInlineForm toolSlug={selectedTool} onBack={() => setSelectedTool(null)} />
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ height: 'calc(100vh - 120px)', overflow: 'auto', px: { xs: 2, md: 3, lg: 4 }, pb: 6 }}>
@@ -48,7 +57,7 @@ export default function Automate() {
         <Grid container spacing={2.5}>
           {section.tools.map((tool) => (
             <Grid key={tool.slug} size={{ xs: 6, sm: 4, md: 3, lg: 3 }}>
-              <ToolCard tool={tool} onClick={() => navigate(`/tools/${tool.slug}`)} />
+              <ToolCard tool={tool} onClick={() => setSelectedTool(tool.slug)} />
             </Grid>
           ))}
         </Grid>

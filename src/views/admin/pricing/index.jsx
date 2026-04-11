@@ -24,19 +24,19 @@ const PLANS = [
   {
     id: 'starter',
     name: 'Starter',
-    price: 49,
+    price: 29,
     yearlyPrice: 17,
     yearlyTotal: 199,
-    yearlySaving: 389,
+    yearlySaving: 149,
     description: 'For solo marketers getting started',
     features: [
-      { text: '1 category (~20 tools)', included: true },
+      { text: 'Full web platform access', included: true },
       { text: '200 generations/month', included: true },
-      { text: 'Single platform choice', included: true },
-      { text: 'Basic templates', included: true },
+      { text: 'All 7 platforms', included: true },
+      { text: 'Real account connect', included: true },
+      { text: 'Standard reports', included: true },
       { text: 'Email support', included: true },
-      { text: 'Multi-platform access', included: false },
-      { text: 'Team collaboration', included: false },
+      { text: 'Automation engine', included: false },
       { text: 'API access', included: false }
     ],
     highlighted: false,
@@ -45,44 +45,44 @@ const PLANS = [
   {
     id: 'professional',
     name: 'Professional',
-    price: 99,
+    price: 59,
     yearlyPrice: 42,
     yearlyTotal: 499,
-    yearlySaving: 689,
+    yearlySaving: 209,
     description: 'For growing marketing teams',
     features: [
-      { text: '1 full platform (56-77 tools)', included: true },
+      { text: 'Everything in Starter', included: true },
       { text: '500 generations/month', included: true },
-      { text: 'All platform tools', included: true },
-      { text: 'All templates + custom', included: true },
+      { text: 'Advanced automation engine', included: true },
+      { text: 'Cross-platform intelligence', included: true },
+      { text: 'Budget reallocation AI', included: true },
+      { text: 'Performance forecasting', included: true },
       { text: 'Priority support', included: true },
-      { text: 'Advanced analytics', included: true },
-      { text: 'Team collaboration', included: false },
       { text: 'API access', included: false }
     ],
     highlighted: false,
     cta: 'Upgrade Now'
   },
   {
-    id: 'all-tools',
-    name: 'All Tools',
-    price: 150,
+    id: 'growth',
+    name: 'Growth',
+    price: 99,
     yearlyPrice: 83,
     yearlyTotal: 999,
-    yearlySaving: 801,
-    description: 'Full access to every tool and feature',
+    yearlySaving: 189,
+    description: 'Full power for serious marketers',
     features: [
-      { text: 'All 3 platforms (206+ tools)', included: true },
-      { text: '1,500 generations/month', included: true },
-      { text: 'Google Ads (56 tools)', included: true },
-      { text: 'Facebook/Meta (61 tools)', included: true },
-      { text: 'Website/Shopify (77 tools)', included: true },
-      { text: 'Full analytics & reporting', included: true },
-      { text: 'Team collaboration', included: true },
+      { text: 'Everything in Professional', included: true },
+      { text: '1,500+ generations/month', included: true },
+      { text: 'Full automation with auto-apply rules', included: true },
+      { text: 'Predictive scaling AI', included: true },
+      { text: 'Deep analytics & executive dashboards', included: true },
+      { text: 'All 7 platforms fully unlocked', included: true },
+      { text: 'Priority support', included: true },
       { text: 'API access', included: true }
     ],
     highlighted: true,
-    cta: 'Get All Tools'
+    cta: 'Get Growth'
   }
 ];
 
@@ -110,7 +110,7 @@ export default function PricingPage() {
             Plans & Pricing
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 3, maxWidth: 480, mx: 'auto' }}>
-            Full access to all 206+ AI marketing tools. No credit card required for free trial.
+            Full access to all AI marketing tools. No credit card required for free trial.
           </Typography>
 
           {/* Monthly / Yearly Toggle */}
@@ -298,25 +298,27 @@ export default function PricingPage() {
         {/* Platform Breakdown */}
         <Box sx={{ textAlign: 'center' }}>
           <Typography variant="h5" sx={{ fontWeight: 700, mb: 3 }}>
-            What's Included in Each Platform
+            7 Platforms Included
           </Typography>
           <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
             {[
-              { name: 'Google Ads', tools: 56, color: '#4285F4' },
-              { name: 'Facebook / Meta', tools: 61, color: '#1877F2' },
-              { name: 'Website / Shopify', tools: 77, color: '#96BF48' }
+              { name: 'Google Ads', desc: 'Search, Display, Shopping, YouTube, Performance Max', color: '#4285F4' },
+              { name: 'Facebook / Meta', desc: 'Facebook, Instagram, Messenger, Audience Network', color: '#1877F2' },
+              { name: 'Instagram', desc: 'Feed, Stories, Reels, Shopping, Carousel', color: '#E4405F' },
+              { name: 'TikTok', desc: 'In-Feed, TopView, Brand Takeover, Spark Ads', color: '#010101' },
+              { name: 'LinkedIn', desc: 'Sponsored Content, Message Ads, Lead Gen Forms', color: '#0A66C2' },
+              { name: 'E-commerce', desc: 'Shopify, Amazon, Product Feed, Shopping Campaigns', color: '#96BF48' },
+              { name: 'Analytics & SEO', desc: 'Google Analytics, SEO Audit, Keyword Research, Reports', color: '#F59E0B' }
             ].map((platform) => (
-              <Grid key={platform.name} size={{ xs: 12, sm: 4 }}>
-                <Card sx={{ borderRadius: 3, border: 1, borderColor: 'divider' }}>
+              <Grid key={platform.name} size={{ xs: 12, sm: 4, md: 3 }}>
+                <Card sx={{ borderRadius: 3, border: 1, borderColor: 'divider', height: '100%' }}>
                   <CardContent sx={{ textAlign: 'center', py: 3 }}>
+                    <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: platform.color, mx: 'auto', mb: 1.5 }} />
                     <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5 }}>
                       {platform.name}
                     </Typography>
-                    <Typography variant="h3" sx={{ fontWeight: 800, color: platform.color }}>
-                      {platform.tools}
-                    </Typography>
                     <Typography variant="caption" color="text.secondary">
-                      AI tools
+                      {platform.desc}
                     </Typography>
                   </CardContent>
                 </Card>

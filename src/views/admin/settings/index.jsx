@@ -103,7 +103,7 @@ export default function SettingsPage() {
             </CardContent>
           </Card>
           <Alert severity="info">
-            Ad account connections are managed through Windmill API. Once connected, campaign data syncs automatically.
+            Once connected, campaign data syncs automatically.
           </Alert>
         </Stack>
       )}

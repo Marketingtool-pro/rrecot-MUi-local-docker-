@@ -73,13 +73,14 @@ const userBehaviorAnalytics = [
 
 /***************************   USER BEHAVIOR - CARDS  ***************************/
 
-export default function AnalyticsBehaviorCard() {
+export default function AnalyticsBehaviorCard({ data }) {
   const theme = useTheme();
   const cardCommonProps = { border: 'none', borderRadius: 0, boxShadow: 'none' };
+  const items = data || userBehaviorAnalytics;
 
   return (
     <Grid container sx={{ borderRadius: 4, boxShadow: theme.vars.customShadows.section, ...applyBorderWithRadius(16, theme) }}>
-      {userBehaviorAnalytics.map((item, index) => (
+      {items.map((item, index) => (
         <Grid key={index} size={{ xs: 6, md: 2.75 }}>
           <BehaviorCard {...{ ...item, cardProps: { sx: cardCommonProps } }} />
         </Grid>
@@ -87,22 +88,7 @@ export default function AnalyticsBehaviorCard() {
       <Grid size={{ xs: 6, md: 3.75 }}>
         <MainCard sx={{ ...cardCommonProps, height: 1, display: 'flex', alignItems: 'center', textAlign: 'center' }}>
           <Typography variant="body2" color="text.secondary">
-            Impressions up{' '}
-            <Typography
-              component="span"
-              variant="inherit"
-              sx={{ color: 'success.main', ...theme.applyStyles('dark', { color: 'success.light' }) }}
-            >
-              18.4%
-            </Typography>{' '}
-            this month. Cost per conversion decreased by{' '}
-            <Typography
-              component="span"
-              variant="inherit"
-              sx={{ color: 'error.main', ...theme.applyStyles('dark', { color: 'error.light' }) }}
-            >
-              $0.45
-            </Typography>
+            Connect your ad accounts to see campaign performance insights and optimization recommendations.
           </Typography>
         </MainCard>
       </Grid>

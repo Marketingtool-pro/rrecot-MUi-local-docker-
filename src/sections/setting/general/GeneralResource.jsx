@@ -10,13 +10,16 @@ import List from '@mui/material/List';
 import SettingCard from '@/components/cards/SettingCard';
 
 // @assets
-import { IconChevronRight, IconClock, IconHelp, IconKeyboard, IconStatusChange } from '@tabler/icons-react';
+import { IconChevronRight, IconClock, IconHelp, IconKeyboard, IconStatusChange, IconShieldCheck, IconMap, IconFileText, IconCookie, IconLock } from '@tabler/icons-react';
 
 const resourceData = [
-  { id: 1, icon: <IconStatusChange />, title: 'Change Log', buttonLabel: 'View Change Log', buttonType: 'button' },
-  { id: 2, icon: <IconHelp />, title: 'SaasAble Help Center', buttonLabel: 'Get Help', buttonType: 'button' },
-  { id: 3, icon: <IconKeyboard />, title: 'Keyboard Shortcut', buttonType: 'icon' },
-  { id: 4, icon: <IconClock />, title: 'Activity log', buttonType: 'icon' }
+  { id: 1, icon: <IconStatusChange />, title: 'Release Notes', buttonLabel: 'View', buttonType: 'button', external: 'https://marketingtool.pro/release-notes/' },
+  { id: 2, icon: <IconHelp />, title: 'Help Center', buttonLabel: 'Get Help', buttonType: 'button', external: 'https://marketingtool.pro/help/' },
+  { id: 3, icon: <IconMap />, title: 'Roadmap', buttonType: 'icon', external: 'https://marketingtool.pro/roadmap/' },
+  { id: 4, icon: <IconShieldCheck />, title: 'Trust & Verification', buttonType: 'icon', external: 'https://marketingtool.pro/trust-verification/' },
+  { id: 5, icon: <IconLock />, title: 'Privacy Policy', buttonType: 'icon', external: 'https://marketingtool.pro/privacy-policy/' },
+  { id: 6, icon: <IconFileText />, title: 'Terms & Conditions', buttonType: 'icon', external: 'https://marketingtool.pro/terms-policy/' },
+  { id: 7, icon: <IconCookie />, title: 'Cookie Policy', buttonType: 'icon', external: 'https://marketingtool.pro/cookie-policy/' },
 ];
 
 /***************************  GENERAL - RESOURCE  ***************************/
@@ -35,11 +38,21 @@ export default function GeneralResource() {
                 <Typography variant="body1">{item.title}</Typography>
               </Stack>
               {item.buttonType === 'button' ? (
-                <Button variant="outlined" size="small" color="secondary">
+                <Button
+                  variant="outlined"
+                  size="small"
+                  color="secondary"
+                  onClick={() => window.open(item.external, '_blank')}
+                >
                   {item.buttonLabel}
                 </Button>
               ) : (
-                <IconButton size="small" color="secondary" aria-label="open">
+                <IconButton
+                  size="small"
+                  color="secondary"
+                  aria-label="open"
+                  onClick={() => window.open(item.external, '_blank')}
+                >
                   <IconChevronRight size={16} />
                 </IconButton>
               )}

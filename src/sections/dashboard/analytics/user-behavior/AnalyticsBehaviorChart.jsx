@@ -39,7 +39,7 @@ function TooltipWrapper() {
 
 /***************************  USER BEHAVIOR - CHART  ***************************/
 
-export default function AnalyticsBehaviorChart() {
+export default function AnalyticsBehaviorChart({ data }) {
   const theme = useTheme();
 
   const [barchart, setBarchart] = useState({
@@ -54,14 +54,14 @@ export default function AnalyticsBehaviorChart() {
   // Define the series data with the SeriesData interface
   const seriesData = [
     {
-      data: [700, 850, 600, 450, 400, 800, 300, 550, 700, 800, 900, 700],
+      data: data?.active || new Array(12).fill(0),
       label: 'Active User',
       id: 'active_user',
       color: theme.vars.palette.primary.main,
       visible: barchart['active_user']
     },
     {
-      data: [600, 750, 700, 500, 300, 600, 200, 450, 600, 700, 800, 650],
+      data: data?.inactive || new Array(12).fill(0),
       label: 'Inactive User',
       id: 'inactive_user',
       color: theme.vars.palette.primary.light,
@@ -102,7 +102,7 @@ export default function AnalyticsBehaviorChart() {
         xAxis={[{ scaleType: 'band', data: xAxisData, disableLine: true, disableTicks: true }]}
         grid={{ horizontal: true }}
         series={visibleSeries}
-        yAxis={[{ disableLine: true, disableTicks: true, tickInterval: [0, 200, 400, 600, 800, 1000] }]}
+        yAxis={[{ disableLine: true, disableTicks: true, min: 0, max: visibleSeries.every((s) => s.data.every((v) => v === 0)) ? 1000 : undefined, tickInterval: [0, 200, 400, 600, 800, 1000] }]}
         colors={seriesData.map((series) => series.color)}
         height={256}
         borderRadius={8}

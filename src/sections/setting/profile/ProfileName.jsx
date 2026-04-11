@@ -10,6 +10,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Stack from '@mui/material/Stack';
 
 // @project
+import { useAuth } from '@/contexts/AuthContext';
 import { firstNameSchema, lastNameSchema } from '@/utils/validation-schema/common';
 
 // @third-party
@@ -24,6 +25,7 @@ const initialData = {
 /***************************  PROFILE - NAME  ***************************/
 
 export default function ProfileName({ profileNameData }) {
+  const { refreshUser } = useAuth();
   const [isProcessing, startTransition] = useTransition();
 
   const {
@@ -34,13 +36,16 @@ export default function ProfileName({ profileNameData }) {
   } = useForm({ defaultValues: initialData });
 
   const onSubmit = (formData) => {
-    console.log(formData);
-
     startTransition(async () => {
-      // Replace the below timeout with your actual API call to save profile name
-      // Example: await saveProfileNameAPI(formData);
-      await new Promise((resolve) => setTimeout(() => resolve('ok'), 3000));
-      enqueueSnackbar(`Profile name has been saved.`, { variant: 'success' });
+      try {
+        const { appwriteAccount } = await import('@/utils/auth-client/appwrite');
+        const fullName = [formData.firstName?.trim(), formData.lastName?.trim()].filter(Boolean).join(' ');
+        await appwriteAccount.updateName(fullName);
+        await refreshUser();
+        enqueueSnackbar('Profile name has been saved.', { variant: 'success' });
+      } catch (err) {
+        enqueueSnackbar(err?.message || 'Failed to update name.', { variant: 'error' });
+      }
     });
   };
 

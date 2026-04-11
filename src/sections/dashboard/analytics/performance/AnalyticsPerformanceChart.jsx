@@ -22,18 +22,18 @@ import { IconArrowUpRight, IconChevronRight } from '@tabler/icons-react';
 /***************************  CHART - DATA  ***************************/
 
 const yearlyData = {
-  salesData: [10000, 18000, 19000, 25000, 23000, 28000, 28000, 20000, 12000, 13000, 12500, 25000],
-  targetData: [20000, 38000, 59000, 28000, 43000, 54000, 18000, 50000, 42000, 43000, 42500, 15000]
+  salesData: new Array(12).fill(0),
+  targetData: new Array(12).fill(0)
 };
 
 const monthlyData = {
-  salesData: [10000, 25000, 24000, 38000, 29000, 40500, 28500, 24500, 28500, 22000, 28000, 37500],
-  targetData: [10000, 17000, 19000, 25000, 24000, 26000, 17000, 20000, 11000, 14000, 12000, 23000]
+  salesData: new Array(12).fill(0),
+  targetData: new Array(12).fill(0)
 };
 
 const dailyData = {
-  salesData: [20000, 38000, 59000, 28000, 43000, 54000, 18000],
-  targetData: [40000, 28000, 49000, 58000, 23000, 53000, 48000]
+  salesData: new Array(7).fill(0),
+  targetData: new Array(7).fill(0)
 };
 
 const xLabelsDaily = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -51,7 +51,7 @@ const dataMap = { [ViewMode.MONTHLY]: monthlyData, [ViewMode.DAILY]: dailyData, 
 
 /***************************  PERFORMANCE - CHART   ***************************/
 
-export default function AnalyticsPerformanceChart() {
+export default function AnalyticsPerformanceChart({ data }) {
   const theme = useTheme();
 
   const [view, setView] = useState(ViewMode.MONTHLY);
@@ -70,16 +70,19 @@ export default function AnalyticsPerformanceChart() {
 
   const xLabels = xLabelsMapping[view] || xLabelsYearly;
 
+  // Use real data from API if available, otherwise use defaults (zeros)
+  const chartData = data?.[view] || dataMap[view];
+
   const seriesData = [
     {
-      data: dataMap[view].salesData,
+      data: chartData.revenue || chartData.salesData,
       label: 'Revenue Trend',
       id: 'sales',
       color: theme.vars.palette.primary.main,
       visible: visibilityOption['sales']
     },
     {
-      data: dataMap[view].targetData,
+      data: chartData.budget || chartData.targetData,
       label: 'Budget Allocation',
       id: 'target',
       color: theme.vars.palette.primary.light,
@@ -130,7 +133,9 @@ export default function AnalyticsPerformanceChart() {
           {
             disableLine: true,
             disableTicks: true,
-            valueFormatter: (value) => (Number(value) > 999 ? `${(Number(value) / 1000).toLocaleString()}k` : value)
+            min: 0,
+            max: visibleSeries.every((s) => s.data.every((v) => v === 0)) ? 1000 : undefined,
+            valueFormatter: (value) => (Number(value) > 999 ? `${(Number(value) / 1000).toLocaleString()}k` : String(value))
           }
         ]}
         hideLegend

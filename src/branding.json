@@ -5,7 +5,7 @@
         "url": "https://www.marketingtool.pro"
     },
     "logo": {
-        "main": "/images/logo.png",
-        "logoIcon": "/images/logo-icon.svg"
+        "main": "/images/logo-transparent.png",
+        "logoIcon": "/images/logo-transparent.png"
     }
 }

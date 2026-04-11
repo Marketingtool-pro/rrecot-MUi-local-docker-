@@ -165,14 +165,14 @@ export default function HelpPage() {
         </Grid>
         <Grid size={{ xs: 12, md: 4 }}>
           <Card>
-            <CardActionArea href="mailto:support@marketingtool.pro">
+            <CardActionArea href="mailto:help@marketingtool.pro">
               <CardContent sx={{ textAlign: 'center', py: 3 }}>
                 <IconMail size={28} style={{ marginBottom: 8 }} />
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                   Email Support
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  support@marketingtool.pro
+                  help@marketingtool.pro
                 </Typography>
               </CardContent>
             </CardActionArea>

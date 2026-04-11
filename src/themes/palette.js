@@ -162,7 +162,7 @@ export function buildPalette() {
     divider: dividerDark,
     background: {
       default: backgroundDark,
-      paper: backgroundDark
+      paper: '#0A0A0E'
     },
     action: {
       hover: withAlpha(secondaryMainDark, 0.08),

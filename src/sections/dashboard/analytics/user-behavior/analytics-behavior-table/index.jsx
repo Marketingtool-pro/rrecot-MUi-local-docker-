@@ -22,8 +22,8 @@ const statusColor = {
 
 /***************************  COMPONENT - TABLE  ***************************/
 
-export default function AnalyticsBehaviorTable() {
-  const [data, setData] = useState([...analyticsBehaviorTableData]);
+export default function AnalyticsBehaviorTable({ data: externalData }) {
+  const [data, setData] = useState(externalData || [...analyticsBehaviorTableData]);
   const [globalFilter, setGlobalFilter] = useState('');
   const [sorting, setSorting] = useState([]);
 

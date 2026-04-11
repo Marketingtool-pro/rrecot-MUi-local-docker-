@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 // @mui
@@ -69,14 +70,8 @@ const yearlyPoints = [
 ];
 
 const yearlyData = {
-  pageViewData: [
-    190, 230, 240, 230, 240, 230, 250, 270, 300, 320, 340, 360, 400, 420, 450, 470, 490, 500, 480, 450, 420, 380, 420, 380, 190, 230, 240,
-    230, 240, 230, 250, 270, 300, 320, 400, 440, 480, 520, 540, 580, 620, 640, 680, 720, 650, 680, 720, 840, 950, 800
-  ],
-  uniqueVisitorData: [
-    900, 920, 930, 860, 840, 820, 800, 840, 860, 840, 800, 780, 760, 790, 740, 710, 670, 650, 690, 750, 780, 760, 730, 680, 650, 620, 500,
-    470, 430, 400, 380, 360, 340, 320, 300, 280, 260, 240, 220, 260, 300, 340, 380, 420, 460, 360, 450, 520, 450, 600
-  ]
+  pageViewData: new Array(50).fill(0),
+  uniqueVisitorData: new Array(50).fill(0)
 };
 
 const monthlyPoints = [
@@ -119,14 +114,8 @@ const monthlyPoints = [
 ];
 
 const monthlyData = {
-  pageViewData: [
-    190, 230, 240, 230, 300, 230, 250, 270, 230, 320, 340, 450, 400, 420, 485, 470, 490, 500, 480, 450, 420, 380, 420, 380, 400, 600, 575,
-    540, 550, 520, 580, 570, 600, 600, 720, 780
-  ],
-  uniqueVisitorData: [
-    900, 920, 930, 860, 840, 820, 800, 840, 860, 840, 800, 780, 760, 790, 740, 710, 670, 650, 690, 750, 780, 760, 730, 680, 650, 680, 630,
-    510, 460, 460, 405, 460, 415, 430, 410, 500
-  ]
+  pageViewData: new Array(36).fill(0),
+  uniqueVisitorData: new Array(36).fill(0)
 };
 
 const dailyPoints = [
@@ -140,8 +129,8 @@ const dailyPoints = [
 ];
 
 const dailyData = {
-  pageViewData: [10, 5, 12, 8, 35, 14, 30],
-  uniqueVisitorData: [15, 20, 22, 18, 21, 30, 38]
+  pageViewData: new Array(7).fill(0),
+  uniqueVisitorData: new Array(7).fill(0)
 };
 
 const timeFilter = ['Daily', 'Monthly', 'Yearly'];
@@ -174,7 +163,7 @@ const dataMap = { [ViewMode.MONTHLY]: monthlyData, [ViewMode.DAILY]: dailyData, 
 
 /***************************  CHART - 1  ***************************/
 
-export default function Chart1() {
+export default function Chart1({ data }) {
   const theme = useTheme();
 
   const [view, setView] = useState(ViewMode.MONTHLY);
@@ -191,17 +180,20 @@ export default function Chart1() {
     setVisibilityOption((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
+  // Use real data from API if available, otherwise use defaults (zeros)
+  const chartData = data?.[view] || dataMap[view];
+
   const seriesData = [
     {
       id: 'page_views',
-      data: dataMap[view].pageViewData,
+      data: chartData.spend || chartData.pageViewData,
       color: theme.vars.palette.primary.light,
       visible: visibilityOption['page_views'],
       label: 'Ad Spend'
     },
     {
       id: 'unique_visitor',
-      data: dataMap[view].uniqueVisitorData,
+      data: chartData.revenue || chartData.uniqueVisitorData,
       color: theme.vars.palette.primary.main,
       visible: visibilityOption['unique_visitor'],
       label: 'Revenue'
@@ -256,7 +248,7 @@ export default function Chart1() {
             tickInterval: (time) => tickInterval(time, view)
           }
         ]}
-        yAxis={[{ scaleType: 'linear', disableLine: true, disableTicks: true, label: 'Visits' }]}
+        yAxis={[{ scaleType: 'linear', disableLine: true, disableTicks: true, label: 'Visits', min: 0, max: visibleSeries.every((s) => s.data.every((v) => v === 0)) ? 1000 : undefined }]}
         hideLegend
         sx={{ '& .MuiLineElement-root': { strokeDasharray: '0', strokeWidth: 2 }, ...dynamicSeriesStyles }}
       >
@@ -272,3 +264,5 @@ export default function Chart1() {
     </MainCard>
   );
 }
+
+Chart1.propTypes = { data: PropTypes.object };

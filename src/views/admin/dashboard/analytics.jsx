@@ -11,6 +11,7 @@ import { AnalyticsOverview, AnalyticsPerformance, AnalyticsUserBehavior } from '
 import { handlerBreadcrumbs } from '@/states/breadcrumbs';
 import { handlerActiveItem, useGetMenuMaster } from '@/states/menu';
 import { useRouter, usePathname } from '@/utils/navigation';
+import useDashboardData from '@/hooks/useDashboardData';
 
 /***************************  DASHBOARD - ANALYTICS  ***************************/
 
@@ -18,6 +19,7 @@ export default function DashboardAnalytics() {
   const router = useRouter();
   const pathname = usePathname();
   const { menuMaster } = useGetMenuMaster();
+  const { data, loading, hasData } = useDashboardData();
 
   const currentTab = router.params.tab || 'overview';
 
@@ -44,9 +46,9 @@ export default function DashboardAnalytics() {
         <Tab label="Finance & Revenue" value="performance" />
       </Tabs>
       <Box>
-        {currentTab === 'overview' && <AnalyticsOverview />}
-        {currentTab === 'user-behavior' && <AnalyticsUserBehavior />}
-        {currentTab === 'performance' && <AnalyticsPerformance />}
+        {currentTab === 'overview' && <AnalyticsOverview data={data?.overview} loading={loading} hasData={hasData} />}
+        {currentTab === 'user-behavior' && <AnalyticsUserBehavior data={data?.campaigns} loading={loading} hasData={hasData} />}
+        {currentTab === 'performance' && <AnalyticsPerformance data={data?.finance} loading={loading} hasData={hasData} />}
       </Box>
     </Stack>
   );

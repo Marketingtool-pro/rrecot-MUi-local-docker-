@@ -41,12 +41,12 @@ import { useAuth } from '@/contexts/AuthContext';
 /***************************  GLASS TOKENS (same as Command Centre)  ***************************/
 
 const glass = {
-  bg: 'rgba(30, 30, 35, 0.65)',
-  border: '1px solid rgba(255,255,255,0.06)',
+  bg: 'rgba(10, 10, 14, 0.80)',
+  border: '1px solid rgba(255,255,255,0.03)',
   blur: 'blur(40px)',
-  shadow: 'inset 2px 4px 16px 0px rgba(248,248,248,0.03)',
+  shadow: 'inset 2px 4px 16px 0px rgba(0,0,0,0.25)',
   radius: '24px',
-  hoverBorder: 'rgba(255,255,255,0.12)'
+  hoverBorder: 'rgba(255,255,255,0.07)'
 };
 
 // Map badge to icon image

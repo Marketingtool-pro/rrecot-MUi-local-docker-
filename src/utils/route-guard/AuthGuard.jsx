@@ -13,9 +13,6 @@ export default function AuthGuard({ children }) {
   const router = useRouter();
   const { isProcessing, userData } = useCurrentUser();
 
-  // DEV BYPASS: skip auth in development
-  if (import.meta.env.DEV) return children;
-
   useEffect(() => {
     if (
       !isProcessing &&

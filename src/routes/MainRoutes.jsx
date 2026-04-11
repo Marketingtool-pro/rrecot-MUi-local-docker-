@@ -34,10 +34,11 @@ const PlatformPage = Loadable(lazy(() => import('@/views/admin/platforms')));
 // Support
 const PricingPage = Loadable(lazy(() => import('@/views/admin/pricing')));
 const HelpPage = Loadable(lazy(() => import('@/views/admin/help')));
-const SettingsPage = Loadable(lazy(() => import('@/views/admin/settings')));
-
-// Settings (from template)
-const SettingTemplatePage = Loadable(lazy(() => import('@/views/admin/setting')));
+const SettingPage = Loadable(lazy(() => import('@/views/admin/setting')));
+const ManageBrandPage = Loadable(lazy(() => import('@/views/admin/setting/manage-brand')));
+const TranslatePage = Loadable(lazy(() => import('@/views/admin/setting/translate')));
+const PlanCreatePage = Loadable(lazy(() => import('@/views/admin/setting/pricing/plan-create')));
+const PlanEditPage = Loadable(lazy(() => import('@/views/admin/setting/pricing/plan-edit')));
 
 const MainRoutes = {
   path: '/',
@@ -51,7 +52,7 @@ const MainRoutes = {
     </AuthProvider>
   ),
   children: [
-    // Default redirect to dashboard with charts
+    // Default redirect
     { index: true, element: <Navigate to="dashboard" replace /> },
 
     // Dashboard — template's 3-tab analytics (Overview, User Behavior, Performance)
@@ -92,16 +93,21 @@ const MainRoutes = {
     // Support
     { path: 'pricing', element: <PricingPage /> },
     { path: 'help', element: <HelpPage /> },
-    { path: 'settings', element: <SettingsPage /> },
 
-    // Template settings (profile, brand, etc.)
+    // Settings (profile, connections, security)
     {
       path: 'setting',
       children: [
         { index: true, element: <Navigate to="profile" replace /> },
-        { path: ':tab', element: <SettingTemplatePage /> }
+        { path: 'general/brand', element: <ManageBrandPage /> },
+        { path: 'internationalization/translate/:language', element: <TranslatePage /> },
+        { path: 'pricing/plan-create', element: <PlanCreatePage /> },
+        { path: 'pricing/plan-edit/:id', element: <PlanEditPage /> },
+        { path: ':tab', element: <SettingPage /> }
       ]
-    }
+    },
+    // Redirect /settings → /setting/profile
+    { path: 'settings', element: <Navigate to="/setting/profile" replace /> }
   ]
 };
 

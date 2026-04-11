@@ -28,15 +28,29 @@ export async function login(formData) {
 
 export async function getUser() {
   const user = await appwriteAccount.get();
+  const prefs = await appwriteAccount.getPrefs();
+
+  // Refresh JWT on every getUser call to keep it valid
+  const jwtResponse = await appwriteAccount.createJWT();
+  const stored = localStorage.getItem(AUTH_USER_KEY);
+  const existing = stored ? JSON.parse(stored) : {};
+  localStorage.setItem(AUTH_USER_KEY, JSON.stringify({
+    ...existing,
+    id: user.$id,
+    email: user.email,
+    access_token: jwtResponse.jwt
+  }));
 
   return {
     id: user.$id,
     email: user.email,
+    name: user.name || '',
     firstname: user.name?.split(' ')[0] || '',
     lastname: user.name?.split(' ').slice(1).join(' ') || '',
     role: user.labels?.includes('admin') ? 'admin' : 'user',
-    contact: user.phone || '',
-    dialcode: user.phone ? '+91' : ''
+    contact: prefs.contact || user.phone || '',
+    dialcode: prefs.dialCode || '+1',
+    avatar: prefs.avatar || ''
   };
 }
 

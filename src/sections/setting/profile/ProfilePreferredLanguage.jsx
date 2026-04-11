@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // @mui
 import Autocomplete from '@mui/material/Autocomplete';
@@ -14,12 +14,40 @@ import { enqueueSnackbar } from 'notistack';
 // @project
 import SettingCard from '@/components/cards/SettingCard';
 
-const languageList = ['English', 'Spanish', 'German'];
+const languageList = ['English', 'Spanish', 'German', 'French', 'Portuguese', 'Hindi', 'Japanese', 'Korean', 'Chinese', 'Arabic'];
 
 /***************************   PROFILE - PREFERRED LANGUAGE  ***************************/
 
 export default function SettingLanguageCard({ selectedTags = 'English', setSelectedTags, isDisabled = false }) {
   const [value, setValue] = useState(selectedTags);
+
+  useEffect(() => {
+    // Load saved language from Appwrite prefs
+    (async () => {
+      try {
+        const { appwriteAccount } = await import('@/utils/auth-client/appwrite');
+        const prefs = await appwriteAccount.getPrefs();
+        if (prefs?.language && languageList.includes(prefs.language)) {
+          setValue(prefs.language);
+        }
+      } catch { /* ignore */ }
+    })();
+  }, []);
+
+  const handleChange = async (_event, newValue) => {
+    if (typeof newValue === 'string') {
+      setValue(newValue);
+      if (setSelectedTags) setSelectedTags(newValue);
+      try {
+        const { appwriteAccount } = await import('@/utils/auth-client/appwrite');
+        const prefs = await appwriteAccount.getPrefs();
+        await appwriteAccount.updatePrefs({ ...prefs, language: newValue });
+        enqueueSnackbar(`Your preferred language has been updated to ${newValue}.`, { variant: 'success' });
+      } catch {
+        enqueueSnackbar('Failed to save language preference.', { variant: 'error' });
+      }
+    }
+  };
 
   return (
     <SettingCard title="Preferred language" caption="Manage your preferred language.">
@@ -28,13 +56,7 @@ export default function SettingLanguageCard({ selectedTags = 'English', setSelec
         <Autocomplete
           options={languageList}
           value={value}
-          onChange={(_event, newValue) => {
-            if (typeof newValue === 'string') {
-              setValue(newValue);
-              if (setSelectedTags) setSelectedTags(newValue);
-              enqueueSnackbar(`Your preferred language has been updated to ${newValue}.`, { variant: 'success' });
-            }
-          }}
+          onChange={handleChange}
           disabled={isDisabled}
           disableClearable
           renderOption={({ key: optionKey, ...optionProps }, option) => (
@@ -46,7 +68,7 @@ export default function SettingLanguageCard({ selectedTags = 'English', setSelec
           sx={{ width: 1 }}
         />
         <FormHelperText>
-          This is the language you will see. It doesn&apos;t affect the language your customers see on your online store.
+          This is the language you will see across your MarketingTool dashboard.
         </FormHelperText>
       </Box>
     </SettingCard>

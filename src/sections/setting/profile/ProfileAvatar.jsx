@@ -29,15 +29,30 @@ export default function ProfileAvatar({ avatar }) {
   } = useForm({ defaultValues: initialData });
 
   const onSubmit = ({ avatar }) => {
-    const formData = new FormData();
-
-    formData.append('avatar', avatar);
-
     startTransition(async () => {
-      // Replace the below timeout with your actual API call to upload the avatar
-      // Example: await uploadAvatarAPI(formData);
-      await new Promise((resolve) => setTimeout(() => resolve('ok'), 3000));
-      enqueueSnackbar(`Profile photo has been saved.`, { variant: 'success' });
+      try {
+        const { appwriteAccount, appwriteStorage, ID } = await import('@/utils/auth-client/appwrite');
+
+        let avatarUrl = avatar;
+        if (avatar instanceof File) {
+          // Upload to Appwrite Storage, save URL in prefs
+          const bucketId = 'avatars';
+          try {
+            const file = await appwriteStorage.createFile(bucketId, ID.unique(), avatar);
+            avatarUrl = `https://api.marketingtool.pro/v1/storage/buckets/${bucketId}/files/${file.$id}/view?project=6952c8a0002d3365625d`;
+          } catch {
+            // If storage bucket doesn't exist, just skip avatar upload
+            enqueueSnackbar('Avatar storage not configured yet. Contact support.', { variant: 'warning' });
+            return;
+          }
+        }
+
+        const prefs = await appwriteAccount.getPrefs();
+        await appwriteAccount.updatePrefs({ ...prefs, avatar: avatarUrl });
+        enqueueSnackbar('Profile photo has been saved.', { variant: 'success' });
+      } catch (err) {
+        enqueueSnackbar(err?.message || 'Failed to save profile photo.', { variant: 'error' });
+      }
     });
   };
 
